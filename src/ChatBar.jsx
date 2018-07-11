@@ -12,13 +12,15 @@ class ChatBar extends Component {
     }
 
     const handleChangeUsername = (event) => {
+      if(event.key === 'Enter') {
         let usernameInput = event.target.value;
         this.props.updateUsername(usernameInput);
+      }
     }
 
     return (
       <footer className="chatbar">
-        <input className="chatbar-username" placeholder="Type your name and hit ENTER (optional)" value={this.props.currentUser} onChange={handleChangeUsername} />
+        <input className="chatbar-username" placeholder="Your name + hit ENTER" onKeyPress={handleChangeUsername} />
         <input className="chatbar-message" placeholder="Type a message and hit ENTER" onKeyPress={onKeyPress} />
       </footer>
     )
