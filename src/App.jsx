@@ -7,17 +7,21 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentUser: {name: "Bob"},
+      currentUser: "",
       messages: []
     }
   }
 
   addMessage = (content) => {
     const message = {
-      username: this.state.currentUser.name,
+      username: this.state.currentUser,
       content: content
     }
     this.webSocket.send(JSON.stringify(message));
+  }
+
+  updateUsername = (content) => {
+    this.setState({currentUser: content});
   }
 
 
@@ -40,6 +44,18 @@ class App extends Component {
       console.log("Connected to server");
     };
 
+    this.webSocket.addEventListener("message", this.receiveMessage);
+  }
+
+  receiveMessage = event => {
+    const message = JSON.parse(event.data);
+    console.log("message: ", message);
+
+    this.setState(prevState => ({
+      ...prevState,
+      messages: prevState.messages.concat(message)
+    }))
+
   }
 
   render() {
@@ -47,7 +63,7 @@ class App extends Component {
     return (
       <div>
       <MessageList messages={this.state.messages}/>
-      <ChatBar currentUser={this.state.currentUser} addMessage={this.addMessage}/>
+      <ChatBar currentUser={this.state.currentUser} addMessage={this.addMessage} updateUsername={this.updateUsername} />
       </div>
     );
   }
