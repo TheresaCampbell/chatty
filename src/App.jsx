@@ -17,18 +17,7 @@ class App extends Component {
     super(props);
     this.state = {
       currentUser: {name: "Bob"},
-      messages: [
-        {
-          id: "001",
-          username: "Bob",
-          content: "Has anyone seen my marbles?",
-        },
-        {
-          id: "002",
-          username: "Anonymous",
-          content: "No, I think you lost them. You lost your marbles Bob. You lost them for good."
-        }
-      ],
+      messages: []
     }
   }
 
@@ -38,7 +27,7 @@ class App extends Component {
       username: this.state.currentUser.name,
       content: content
     }
-    this.webSocket.send(`User ${message.username} said ${message.content}`);
+    this.webSocket.send(JSON.stringify(message));
     // const oldMessages = this.state.messages;
     // const newMessages = [...oldMessages, message];
     // this.setState({messages: newMessages});
