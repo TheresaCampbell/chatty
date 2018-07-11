@@ -3,15 +3,6 @@ import ChatBar from "./ChatBar.jsx";
 import Message from "./Message.jsx";
 import MessageList from "./MessageList.jsx";
 
-const createRandomID = () => {
-    let string = "";
-    const possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-
-    for (let i = 0; i < 6; i++)
-      string += possible.charAt(Math.floor(Math.random() * possible.length));
-    return string;
-}
-
 class App extends Component {
   constructor(props) {
     super(props);
@@ -23,14 +14,10 @@ class App extends Component {
 
   addMessage = (content) => {
     const message = {
-      id: createRandomID(),
       username: this.state.currentUser.name,
       content: content
     }
     this.webSocket.send(JSON.stringify(message));
-    // const oldMessages = this.state.messages;
-    // const newMessages = [...oldMessages, message];
-    // this.setState({messages: newMessages});
   }
 
 
