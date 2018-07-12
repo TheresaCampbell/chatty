@@ -20,7 +20,6 @@ class App extends Component {
       username: this.state.currentUser,
       content: data
     }
-    console.log("postMessage: ", message);
     this.webSocket.send(JSON.stringify(message));
   }
 
@@ -62,18 +61,20 @@ class App extends Component {
   receiveMessage = event => {
     const message = JSON.parse(event.data);
 
-    this.setState(prevState => ({
-      ...prevState,
-      messages: prevState.messages.concat(message),
-      numberOfClients: message.numberOfClients
-    }))
-    console.log("messages: ", this.state.messages);
-    console.log("state: ", this.state);
+    switch(message.type) {
+      case "clients":
+        this.setState({numberOfClients: message.numberOfClients});
+        break;
+      default:
+         this.setState(prevState => ({
+          ...prevState,
+          messages: prevState.messages.concat(message)
+         }))
+    }
 }
 
   render() {
     console.log("Rendering App");
-    console.log("this.state.numberOfClients: ", this.state.numberOfClients);
     return (
       <div>
       <NavBar clients={this.state.numberOfClients}/>
