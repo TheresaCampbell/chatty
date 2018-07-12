@@ -40,7 +40,7 @@ wss.on('connection', (ws) => {
         receivedMessage.type = "incomingNotification";
         break;
       default:
-        throw new Error("Unknown event type: ", message.type);
+        throw new Error("Unknown event type: ", receivedMessage.type);
     }
 
     receivedMessage.id = uuid();

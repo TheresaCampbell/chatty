@@ -64,7 +64,7 @@ class App extends Component {
       ...prevState,
       messages: prevState.messages.concat(message)
     }))
-
+    console.log("messages: ", this.state.messages);
   }
 
   render() {
