@@ -12,19 +12,27 @@ class App extends Component {
     }
   }
 
-  addMessage = (content) => {
+  addMessage = (data) => {
     const message = {
+      type: "postMessage",
       username: this.state.currentUser,
-      content: content
+      content: data
     }
+    console.log("postMessage: ", message);
     this.webSocket.send(JSON.stringify(message));
   }
 
-  updateUsername = (content) => {
-    if (content === "") {
-      content = "Anonymous";
+  updateUsername = (data) => {
+    if (data === "") {
+      data = "Anonymous";
     }
-    this.setState({currentUser: content});
+
+    const message = {
+      type: "postNotification",
+      content: `${this.state.currentUser} changed their name to ${data}.`
+    }
+    this.webSocket.send(JSON.stringify(message));
+    this.setState({currentUser: data});
   }
 
   componentDidMount() {

@@ -29,11 +29,24 @@ wss.on('connection', (ws) => {
   console.log('Client connected');
 
   ws.on('message', (message) => {
-    const incomingMessage = JSON.parse(message)
-    incomingMessage.id = uuid();
-    console.log("parsed: ", incomingMessage);
+    const receivedMessage = JSON.parse(message);
+    console.log("receivedMessage: ", receivedMessage);
 
-    wss.broadcast(JSON.stringify(incomingMessage));
+    switch(receivedMessage.type) {
+      case "postMessage":
+        receivedMessage.type = "incomingMessage";
+        break;
+      case "postNotification":
+        receivedMessage.type = "incomingNotification";
+        break;
+      default:
+        throw new Error("Unknown event type: ", message.type);
+    }
+
+    receivedMessage.id = uuid();
+    console.log("parsed: ", receivedMessage);
+
+    wss.broadcast(JSON.stringify(receivedMessage));
 
   })
 
