@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
-import ChatBar from "./ChatBar.jsx";
-import Message from "./Message.jsx";
+import NavBar from "./NavBar.jsx";
 import MessageList from "./MessageList.jsx";
+import Message from "./Message.jsx";
+import ChatBar from "./ChatBar.jsx";
 
 class App extends Component {
   constructor(props) {
@@ -71,8 +72,9 @@ class App extends Component {
     console.log("Rendering App");
     return (
       <div>
+      <NavBar/>
       <MessageList messages={this.state.messages}/>
-      <ChatBar addMessage={this.addMessage} updateUsername={this.updateUsername} />
+      <ChatBar addMessage={this.addMessage} updateUsername={this.updateUsername}/>
       </div>
     );
   }
