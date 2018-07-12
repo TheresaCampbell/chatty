@@ -29,10 +29,13 @@ const setOfClients = new Set();
 
 wss.on('connection', (ws) => {
   console.log('Client connected');
+  console.log("wss.clients.size (connect): ", wss.clients.size);
 
-  setOfClients.add(ws);
-  const numberOfClientsConnected = setOfClients.size;
-  console.log('set size upon connection open: ', numberOfClientsConnected);
+  const numberOfClientsConnected = {
+      id: uuid(),
+      type: "clients",
+      numberOfClients: wss.clients.size
+    };
 
   wss.broadcast(JSON.stringify(numberOfClientsConnected));
 
@@ -61,10 +64,13 @@ wss.on('connection', (ws) => {
   // Set up a callback for when a client closes the socket. This usually means they closed their browser.
   ws.on('close', () => {
     console.log('Client disconnected');
+    console.log("wss.clients.size (disconnect): ", wss.clients.size);
 
-    setOfClients.delete(ws);
-    const numberOfClientsConnected = setOfClients.size;
-    console.log('set size upon connection close: ', numberOfClientsConnected);
+    const numberOfClientsConnected = {
+      id: uuid(),
+      type: "clients",
+      numberOfClients: wss.clients.size
+    }
 
     wss.broadcast(JSON.stringify(numberOfClientsConnected));
   });

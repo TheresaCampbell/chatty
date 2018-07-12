@@ -9,7 +9,8 @@ class App extends Component {
     super(props);
     this.state = {
       currentUser: "Anonymous",
-      messages: []
+      messages: [],
+      numberOfClients: 0
     }
   }
 
@@ -63,16 +64,19 @@ class App extends Component {
 
     this.setState(prevState => ({
       ...prevState,
-      messages: prevState.messages.concat(message)
+      messages: prevState.messages.concat(message),
+      numberOfClients: message.numberOfClients
     }))
     console.log("messages: ", this.state.messages);
-  }
+    console.log("state: ", this.state);
+}
 
   render() {
     console.log("Rendering App");
+    console.log("this.state.numberOfClients: ", this.state.numberOfClients);
     return (
       <div>
-      <NavBar/>
+      <NavBar clients={this.state.numberOfClients}/>
       <MessageList messages={this.state.messages}/>
       <ChatBar addMessage={this.addMessage} updateUsername={this.updateUsername}/>
       </div>
