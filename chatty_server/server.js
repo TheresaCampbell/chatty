@@ -22,11 +22,8 @@ wss.broadcast = (data, client) => {
   });
 };
 
-
 // Callback that runs when a client connects to the server. When a client connects they are assigned a socket, represented by the client parameter in the callback.
 wss.on('connection', (client) => {
-  console.log('Client connected');
-
   const numberOfClientsConnected = {
       type: "clients",
       numberOfClients: wss.clients.size
@@ -57,8 +54,6 @@ wss.on('connection', (client) => {
 
   // Callback for when a client closes the socket.
   client.on('close', () => {
-    console.log('Client disconnected');
-
     const numberOfClientsConnected = {
       id: uuid(),
       type: "clients",

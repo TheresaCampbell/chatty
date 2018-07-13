@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 
 class NavBar extends Component {
   render() {
+
     const isSingular = this.props.clients === 1;
 
     return (

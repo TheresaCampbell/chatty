@@ -40,18 +40,17 @@ class App extends Component {
       type: "postNotification",
       content: `${this.state.currentUser.name} changed their name to ${data}.`
     }
+
     this.webSocket.send(JSON.stringify(message));
+
     this.setState({currentUser: {name: data, color: this.state.currentUser.color}});
   }
 
   //A connection with the WebSocket Server is only opened once the elements within render() have mounted.
   componentDidMount() {
-    console.log("componentDidMount <App />");
-
     this.webSocket = new WebSocket("ws://localhost:3001/");
 
     this.webSocket.onopen = (event) => {
-      console.log("Connected to server");
     };
 
     this.webSocket.addEventListener("message", this.receiveMessage);
@@ -73,10 +72,9 @@ class App extends Component {
           messages: prevState.messages.concat(message)
          }))
     }
-}
+  }
 
   render() {
-    console.log("Rendering App");
     return (
       <div>
       <NavBar clients={this.state.numberOfClients}/>

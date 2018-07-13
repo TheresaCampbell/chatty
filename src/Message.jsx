@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
 
 class Message extends Component {
-
   render() {
+
     const usernameColor = {color: this.props.color};
     const isNotification = this.props.type === "incomingNotification";
+
     return (
       <div>
 
