@@ -3,6 +3,7 @@ const WebSocket = require('ws');
 const SocketServer = WebSocket.Server;
 const PORT = 3001;
 const uuid = require('uuid/v4');
+const randomColor = require('random-color');
 
 // Create a new express server
 const server = express()
@@ -22,18 +23,18 @@ wss.broadcast = (data, ws) => {
   });
 };
 
+
 // Set up a callback that will run when a client connects to the server
 // When a client connects they are assigned a socket, represented by
 // the ws parameter in the callback.
-const setOfClients = new Set();
 
 wss.on('connection', (ws) => {
   console.log('Client connected');
 
   const numberOfClientsConnected = {
-      id: uuid(),
       type: "clients",
-      numberOfClients: wss.clients.size
+      numberOfClients: wss.clients.size,
+      color: randomColor().hexString()
     };
 
   wss.broadcast(JSON.stringify(numberOfClientsConnected));

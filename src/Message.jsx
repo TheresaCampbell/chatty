@@ -3,6 +3,7 @@ import React, {Component} from 'react';
 class Message extends Component {
 
   render() {
+    const usernameColor = {color: this.props.color};
     const isNotification = this.props.type === "incomingNotification";
     return (
       <div>
@@ -17,7 +18,7 @@ class Message extends Component {
 
       // Message formatting
       <div className="message">
-        <span className="message-username">{this.props.username}</span>
+        <span className="message-username" style={usernameColor}>{this.props.username}</span>
         <span className="message-content">{this.props.content}</span>
       </div>
       )}

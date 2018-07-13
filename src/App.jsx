@@ -8,16 +8,19 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentUser: "Anonymous",
+      currentUser: {
+        name: "Anonymous",
+        color: ""
+      },
       messages: [],
-      numberOfClients: 0
+      numberOfClients: 0,
     }
   }
 
   addMessage = (data) => {
     const message = {
       type: "postMessage",
-      username: this.state.currentUser,
+      username: this.state.currentUser.name,
       content: data
     }
     this.webSocket.send(JSON.stringify(message));
@@ -30,10 +33,10 @@ class App extends Component {
 
     const message = {
       type: "postNotification",
-      content: `${this.state.currentUser} changed their name to ${data}.`
+      content: `${this.state.currentUser.name} changed their name to ${data}.`
     }
     this.webSocket.send(JSON.stringify(message));
-    this.setState({currentUser: data});
+    this.setState({currentUser: {name: data, color: this.state.currentUser.color}});
   }
 
   componentDidMount() {
@@ -63,7 +66,10 @@ class App extends Component {
 
     switch(message.type) {
       case "clients":
-        this.setState({numberOfClients: message.numberOfClients});
+        this.setState({
+          numberOfClients: message.numberOfClients,
+          currentUser: {name: this.state.currentUser.name, color: message.color}
+        });
         break;
       default:
          this.setState(prevState => ({
@@ -71,6 +77,8 @@ class App extends Component {
           messages: prevState.messages.concat(message)
          }))
     }
+
+    console.log("state: ", this.state);
 }
 
   render() {
@@ -78,7 +86,7 @@ class App extends Component {
     return (
       <div>
       <NavBar clients={this.state.numberOfClients}/>
-      <MessageList messages={this.state.messages}/>
+      <MessageList messages={this.state.messages} color={this.state.color}/>
       <ChatBar addMessage={this.addMessage} updateUsername={this.updateUsername}/>
       </div>
     );
