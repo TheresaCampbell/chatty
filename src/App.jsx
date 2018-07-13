@@ -4,13 +4,15 @@ import MessageList from "./MessageList.jsx";
 import Message from "./Message.jsx";
 import ChatBar from "./ChatBar.jsx";
 
+const randomColor = require('random-color');
+
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
       currentUser: {
         name: "Anonymous",
-        color: ""
+        color: randomColor().hexString()
       },
       messages: [],
       numberOfClients: 0,
@@ -21,6 +23,7 @@ class App extends Component {
     const message = {
       type: "postMessage",
       username: this.state.currentUser.name,
+      color: this.state.currentUser.color,
       content: data
     }
     this.webSocket.send(JSON.stringify(message));
@@ -42,16 +45,6 @@ class App extends Component {
   componentDidMount() {
     console.log("componentDidMount <App />");
 
-    // setTimeout(() => {
-    //   console.log("Simulating incoming message");
-    //   // Add a new message to the list of messages in the data store
-    //   const newMessage = {id: 3, username: "Michelle", content: "Hello there!"};
-    //   const messages = this.state.messages.concat(newMessage)
-    //   // Update the state of the app component.
-    //   // Calling setState will trigger a call to render() in App and all child components.
-    //   this.setState({messages: messages})
-    //   }, 3000);
-
     this.webSocket = new WebSocket("ws://localhost:3001/");
 
     this.webSocket.onopen = (event) => {
@@ -67,8 +60,7 @@ class App extends Component {
     switch(message.type) {
       case "clients":
         this.setState({
-          numberOfClients: message.numberOfClients,
-          currentUser: {name: this.state.currentUser.name, color: message.color}
+          numberOfClients: message.numberOfClients
         });
         break;
       default:
@@ -86,7 +78,7 @@ class App extends Component {
     return (
       <div>
       <NavBar clients={this.state.numberOfClients}/>
-      <MessageList messages={this.state.messages} color={this.state.color}/>
+      <MessageList messages={this.state.messages} />
       <ChatBar addMessage={this.addMessage} updateUsername={this.updateUsername}/>
       </div>
     );

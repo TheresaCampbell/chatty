@@ -3,7 +3,7 @@ const WebSocket = require('ws');
 const SocketServer = WebSocket.Server;
 const PORT = 3001;
 const uuid = require('uuid/v4');
-const randomColor = require('random-color');
+// const randomColor = require('random-color');
 
 // Create a new express server
 const server = express()
@@ -33,8 +33,8 @@ wss.on('connection', (ws) => {
 
   const numberOfClientsConnected = {
       type: "clients",
-      numberOfClients: wss.clients.size,
-      color: randomColor().hexString()
+      numberOfClients: wss.clients.size
+      // color: randomColor().hexString()
     };
 
   wss.broadcast(JSON.stringify(numberOfClientsConnected));
