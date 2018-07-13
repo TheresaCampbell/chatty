@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 class ChatBar extends Component {
   render(){
 
-    const onKeyPress = (event) => {
+    const handleMessage = (event) => {
       if(event.key === 'Enter'){
         let messageInput = event.target.value;
         this.props.addMessage(messageInput);
@@ -21,7 +21,7 @@ class ChatBar extends Component {
     return (
       <footer className="chatbar">
         <input className="chatbar-username" placeholder="Your name + hit ENTER" onKeyPress={handleChangeUsername} />
-        <input className="chatbar-message" placeholder="Type a message and hit ENTER" onKeyPress={onKeyPress} />
+        <input className="chatbar-message" placeholder="Type a message and hit ENTER" onKeyPress={handleMessage} />
       </footer>
     )
   }

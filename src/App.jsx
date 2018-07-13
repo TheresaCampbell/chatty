@@ -19,6 +19,7 @@ class App extends Component {
     }
   }
 
+  //When a user posts a message, the message is sent to the server to be broadcast to all users.
   addMessage = (data) => {
     const message = {
       type: "postMessage",
@@ -29,6 +30,7 @@ class App extends Component {
     this.webSocket.send(JSON.stringify(message));
   }
 
+  //When a user updates their name, the new name is sent to the server to be broadcast to all users. App's state is also updated.
   updateUsername = (data) => {
     if (data === "") {
       data = "Anonymous";
@@ -42,6 +44,7 @@ class App extends Component {
     this.setState({currentUser: {name: data, color: this.state.currentUser.color}});
   }
 
+  //A connection with the WebSocket Server is only opened once the elements within render() have mounted.
   componentDidMount() {
     console.log("componentDidMount <App />");
 
@@ -54,6 +57,7 @@ class App extends Component {
     this.webSocket.addEventListener("message", this.receiveMessage);
   }
 
+  //Upon receiving a message from the server, App state is updated based on the message type.
   receiveMessage = event => {
     const message = JSON.parse(event.data);
 
@@ -69,8 +73,6 @@ class App extends Component {
           messages: prevState.messages.concat(message)
          }))
     }
-
-    console.log("state: ", this.state);
 }
 
   render() {

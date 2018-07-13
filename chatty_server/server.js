@@ -3,19 +3,18 @@ const WebSocket = require('ws');
 const SocketServer = WebSocket.Server;
 const PORT = 3001;
 const uuid = require('uuid/v4');
-// const randomColor = require('random-color');
 
-// Create a new express server
+// Create a new express server.
 const server = express()
-   // Make the express server serve static assets (html, javascript, css) from the /public folder
+   // Make the express server serve static assets (html, javascript, css) from the /public folder.
   .use(express.static('public'))
   .listen(PORT, '0.0.0.0', 'localhost', () => console.log(`Listening on ${ PORT }`));
 
 // Create the WebSockets server
 const wss = new SocketServer({ server });
 
-//Function that broadcasts incoming messages to all users.
-wss.broadcast = (data, ws) => {
+//Function that broadcasts incoming data to all users.
+wss.broadcast = (data, client) => {
   wss.clients.forEach(client => {
     if (client.readyState === WebSocket.OPEN) {
       client.send(data);
@@ -24,22 +23,19 @@ wss.broadcast = (data, ws) => {
 };
 
 
-// Set up a callback that will run when a client connects to the server
-// When a client connects they are assigned a socket, represented by
-// the ws parameter in the callback.
-
-wss.on('connection', (ws) => {
+// Callback that runs when a client connects to the server. When a client connects they are assigned a socket, represented by the client parameter in the callback.
+wss.on('connection', (client) => {
   console.log('Client connected');
 
   const numberOfClientsConnected = {
       type: "clients",
       numberOfClients: wss.clients.size
-      // color: randomColor().hexString()
     };
 
   wss.broadcast(JSON.stringify(numberOfClientsConnected));
 
-  ws.on('message', (message) => {
+  //Callback that runs when the server receives a message from the App component.
+  client.on('message', (message) => {
     const receivedMessage = JSON.parse(message);
 
     switch(receivedMessage.type) {
@@ -59,8 +55,8 @@ wss.on('connection', (ws) => {
 
   })
 
-  // Set up a callback for when a client closes the socket. This usually means they closed their browser.
-  ws.on('close', () => {
+  // Callback for when a client closes the socket.
+  client.on('close', () => {
     console.log('Client disconnected');
 
     const numberOfClientsConnected = {
