@@ -30,7 +30,9 @@ npm start
 
 ### Screenshots
 
-
+![Screenshot of Chatty home page](https://github.com/TheresaCampbell/react-simple-boilerplate/blob/master/docs/chatty.png?raw=true)
+![Screenshot of methods that set App component state when messages are sent and display names are updated](https://github.com/TheresaCampbell/react-simple-boilerplate/blob/master/docs/state-setting-methods.png?raw=true)
+![Screenshot of WebSocket server](https://github.com/TheresaCampbell/react-simple-boilerplate/blob/master/docs/websocket-server.png?raw=true)
 
 ### Dependencies
 
