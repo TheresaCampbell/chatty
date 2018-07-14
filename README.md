@@ -15,7 +15,13 @@ Chatty was created using React, Webpack, and Babel, as well as other technologie
 git clone git@github.com:[YOUR GITHUB USERNAME]/react-simple-boilerplate.git
 ```
 
-2. Install dependencies using the `npm install` command.
+2. Install dependencies from the react-simple-boilerplate directory using the `npm install` command.
+
+```
+npm install
+```
+
+3. Install dependencies from the chatty_server directory using the `npm install` command.
 
 ```
 npm install
