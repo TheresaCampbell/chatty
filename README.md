@@ -12,7 +12,7 @@ Chatty was created using React, Webpack, and Babel, as well as other technologie
 1. Fork and then clone this repository.
 
 ```
-git clone git@github.com:[YOUR GITHUB USERNAME]/react-simple-boilerplate.git
+git clone git@github.com:[YOUR GITHUB USERNAME]/chatty.git
 ```
 
 2. Install dependencies from the react-simple-boilerplate directory using the `npm install` command.
